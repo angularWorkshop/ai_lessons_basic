@@ -20,16 +20,21 @@ test('sends earlier turns before the follow-up', async () => {
     { role: 'user', content: 'And tomorrow?' },
   ]);
 });
-test('a failed exchange is not saved', async () => {
+test('a failed exchange does not add a turn or erase earlier history', async () => {
   const calls = [];
   const session = createSession(async messages => {
     calls.push(messages);
-    if (calls.length === 1) throw new Error('Offline');
+    if (calls.length === 2) throw new Error('Offline');
     return 'Ready';
   });
+  await session.send('Order A48?');
   await assert.rejects(session.send('Failed turn'), /Offline/);
   await session.send('Retry');
-  assert.deepEqual(calls[1], [{ role: 'user', content: 'Retry' }]);
+  assert.deepEqual(calls[2], [
+    { role: 'user', content: 'Order A48?' },
+    { role: 'assistant', content: 'Ready' },
+    { role: 'user', content: 'Retry' },
+  ]);
 });
 test('reset discards old turns', async () => {
   const calls = [];
