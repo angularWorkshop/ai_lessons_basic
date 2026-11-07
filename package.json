@@ -1,10 +1,11 @@
 {
-  "name": "ai-lessons-basic",
+  "name": "edutec-ai-basic-lab",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/verify.mjs",
-    "branches": "node scripts/branches.mjs"
+    "start": "node scripts/status.mjs",
+    "test": "tsc && node --test tests/index.test.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "typescript": "5.9.3"
