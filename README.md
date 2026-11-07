@@ -7,4 +7,4 @@ This repository contains the starter and reference projects for the 10 editor la
 - Open `src/index.ts`, complete the TODO, and check the terminal. To verify manually, run `npm test`.
 - Projects use a mock model. Do not add an API key or change the tests.
 
-`npm ci && npm test` on `main` checks every starter and tests each reference fix in the corresponding starter. `npm run branches` prepares the Git refs locally; publishing is a separate Git push.
+`npm ci && npm test` on `main` checks every starter, tests each reference fix in the corresponding starter, and verifies that the status runner detects a save. `npm run branches` prepares the Git refs locally. After a verified change, `npm run branches -- --update` appends commits to the existing refs; publishing is a separate fast-forward Git push.

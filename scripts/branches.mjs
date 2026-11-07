@@ -26,17 +26,17 @@ function treeFor(files) {
 }
 
 const parent = git(['rev-parse', 'refs/heads/main']);
+const allowUpdate = process.argv.includes('--update');
 for (const id of labs.keys()) {
   for (const mode of ['lesson', 'answer']) {
     const name = branchName(id, mode);
     const ref = 'refs/heads/' + name;
     const tree = treeFor(createProject(id, mode));
     const current = git(['for-each-ref', '--format=%(objectname)', ref]);
-    if (current) {
-      assert.equal(git(['rev-parse', current + '^{tree}']), tree, 'Ref already has different contents: ' + name);
-    } else {
-      const commit = git(['commit-tree', tree, '-p', parent, '-m', 'AI Basic ' + id + ' ' + mode]);
-      git(['update-ref', ref, commit, '0000000000000000000000000000000000000000']);
+    if (!current || git(['rev-parse', current + '^{tree}']) !== tree) {
+      assert.ok(!current || allowUpdate, 'Ref already has different contents: ' + name + '. Use --update to append a commit.');
+      const commit = git(['commit-tree', tree, '-p', current || parent, '-m', 'AI Basic ' + id + ' ' + mode]);
+      git(['update-ref', ref, commit, current || '0000000000000000000000000000000000000000']);
     }
     console.log(name);
   }

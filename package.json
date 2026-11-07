@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/verify.mjs",
+    "test": "node scripts/verify.mjs && node scripts/verify-runner.mjs",
     "branches": "node scripts/branches.mjs"
   },
   "devDependencies": {
