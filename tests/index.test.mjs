@@ -8,6 +8,7 @@ test('starts a conversation with the new message', () => {
 test('appends after the previous reply without changing the input', () => {
   const first = { role: 'assistant', content: 'Ready' };
   const history = [first];
-  assert.deepEqual(addUserMessage(history, 'Status?'), [first, { role: 'user', content: 'Status?' }]);
-  assert.deepEqual(history, [first]);
+  const before = structuredClone(history);
+  assert.deepEqual(addUserMessage(history, 'Status?'), [...before, { role: 'user', content: 'Status?' }]);
+  assert.deepEqual(history, before);
 });
