@@ -1,0 +1,12 @@
+{
+  "name": "ai-lessons-basic",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/verify.mjs",
+    "branches": "node scripts/branches.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}
